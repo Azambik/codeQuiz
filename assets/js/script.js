@@ -15,6 +15,7 @@ var questionNumber = 0;
 var selectedEl = "";
 var chosenAnswer = "";
 var score =0;
+var savedScore = [];
 
 // array for questions and answers
 var questionAndAnswers = [
@@ -100,10 +101,17 @@ var questionAndAnswers = [
     },
 ];
 var startGame = function(){
+    timeS=300
     //start timer function
     setInterval(()=>{
         timeS -= 1;
+        if (timeS <= 0){
+            endGame();
+            clearInterval();
+            timeS=300;
+        } 
         timerEl.innerHTML = timeS;
+
 
     },1000)
     
@@ -144,11 +152,6 @@ var questionUpdate = function(){
     }
 };
 var validateAnswer = function(){
-    if (questionNumber === 9){
-        questionEl.innerHTML = ("Your score is " + score);
-        gameStarted = false;
-    
-    }
     console.log("selectedEl:" + selectedEl +"answer:" + questionAndAnswers[questionNumber].answer );
     if (questionAndAnswers[questionNumber].answer === selectedEl){
         console.log("correct")
@@ -171,8 +174,40 @@ var endGame = function(){
     var listItemEl = document.createElement("li");
     listItemEl.className = "player-score";
     listItemEl.innerHTML = "Name: "+ nameToSave + " score: " + score + " time left: " + timeS;
+    savedScore.push({ name:  nameToSave, score: score, timeLeft: timeS});
     highScoreEl.appendChild(listItemEl);
+    questionEl.innerHTML = "press start to beguin the game";
+        Answer1El.innerHTML = "start";
+        Answer2El.innerHTML = "2";
+        Answer3El.innerHTML = "3";
+        Answer4El.innerHTML = "4";
+        
+        questionNumber=0;
+        saveScores();
+        gameStarted = false;
+
 };
+var saveScores = function(){
+ localStorage.setItem("savedScore",JSON.stringify(savedScore));
+ console.log(JSON.stringify(savedScore));
+};
+
+var loadScore = function() {
+    let tempSaveScore = localStorage.getItem("savedScore");
+    if (tempSaveScore) {
+        let mySavedScore = JSON.parse(tempSaveScore.toString());
+        console.log(mySavedScore);
+        for(let i=0; i < mySavedScore.length; i++){
+        var listItemEl = document.createElement("li");
+        listItemEl.className = "player-score";
+        listItemEl.innerHTML = "Name: "+ mySavedScore[i].name + " score: " + mySavedScore[i].score + " time left: " + mySavedScore[i].timeLeft;
+        highScoreEl.appendChild(listItemEl);
+        }
+        savedScore = mySavedScore;
+        //hi
+    }
+};
+loadScore();
 
 //Event listeners
 clickZoneEl.addEventListener("click",clickHandler);

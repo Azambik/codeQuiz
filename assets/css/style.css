@@ -1,20 +1,27 @@
+body{
+    height: 100%;
+    margin: 0;
+    
+}
 .high-score{
     background: red;
-    width: 25%;
+    
     height: 100%;
-    float: left;
+    width: 25%;
     text-align: center;
-    display: flex;
+    
+    left: 0;
 }
 
 .game-board{
     background: blue;
     width: 75%;
     height: 100%;
-    float: right;
+   
     text-align: center;
-    flex: auto;
-    display: flex;
+    
+    
+
 }
 
 .qna{
@@ -23,13 +30,29 @@
     height: 500px;
     padding: 200px,0,0,0;
     text-align: center; 
-    margin: 190px 0 0 0;
+    margin: 190px 0 0 325px;
 }
 .answerli{
     background: darkred;
     border: solid 5px;
     padding:10px;
+    border-radius: 25px;
 }
 .timer{
     float: right;
 }
+.answerli:hover {
+    background: black;
+    color: darkred;
+    border-radius: 25px;
+}
+.Row {
+    display: table;
+    width: 100%; 
+    table-layout: fixed; 
+    border-spacing: 10px;
+}
+.Column {
+    display: table-cell;
+}
+    
